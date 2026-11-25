@@ -23,6 +23,35 @@ export interface AuctionCardItem {
   bidsCount: number;
 }
 
+export interface FightHistoryItem {
+  id: string;
+  arena: string;
+  stake: number;
+  description: string;
+  isHighlight?: boolean;
+}
+
+export interface ChickenDetailItem {
+  id: string;
+  code: string;
+  name: string;
+  tags: string[];
+  breedType: string;
+  weight: string;
+  age: string;
+  winCount: number;
+  fightingStyleTitle: string;
+  fightingStyleDetail: string;
+  fightHistory: FightHistoryItem[];
+  transportInfo: string;
+  price: number;
+  depositRate: number;
+  status: "available" | "reserved" | "sold";
+  images: string[];
+  videoUrl?: string;
+  pedigree?: BloodlinePedigree;
+}
+
 export interface ChickenProduct {
   id: string;
   code: string;
@@ -95,6 +124,3 @@ export interface ApiError {
   message: string;
   statusCode?: number;
 }
-
-export type UserRole = "guest" | "member" | "admin";
-

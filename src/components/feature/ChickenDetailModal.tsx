@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Modal } from "@/components/Base/ui/Modal";
-import { Button } from "@/components/Base/ui/Button";
-import { useChickenDetail } from "@/hooks/useChickenDetail";
-import { formatNumber } from "@/lib/formatters";
-import { PedigreeSection } from "@/components/Base/ui/PedigreeSection";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { useChickenDetail } from "@/hook/useChickenDetail";
+import { formatNumber } from "@/utils/formatNumber";
+import { PedigreeSection } from "@/components/feature/PedigreeSection";
 
 export interface ChickenDetailModalProps {
   detailHook?: ReturnType<typeof useChickenDetail>;

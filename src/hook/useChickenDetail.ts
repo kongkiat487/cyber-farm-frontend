@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChickenDetailItem } from "@/types";
+import { ChickenDetailItem } from "@/type/farmType";
 
 const mockDefaultChicken: ChickenDetailItem = {
   id: "chk-881",
@@ -52,12 +52,17 @@ export type DetailTab = "info" | "pedigree" | "video";
 
 export function useChickenDetail(initialData: ChickenDetailItem = mockDefaultChicken) {
   const [chicken, setChicken] = useState<ChickenDetailItem>(initialData);
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<DetailTab>("info");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
-  const openDetail = (item?: ChickenDetailItem) => {
-    if (item) setChicken(item);
+  const openDetail = (item?: Partial<ChickenDetailItem>) => {
+    if (item) {
+      setChicken((prev) => ({
+        ...prev,
+        ...item,
+      }));
+    }
     setSelectedImageIndex(0);
     setActiveTab("info");
     setIsOpen(true);

@@ -1,6 +1,6 @@
 import React from "react";
-import { BloodlinePedigree } from "@/types";
-import { Badge } from "./Badge";
+import { BloodlinePedigree } from "@/type/farmType";
+import { Badge } from "@/components/ui/Badge";
 
 export interface PedigreeTreeProps {
   pedigree?: BloodlinePedigree;

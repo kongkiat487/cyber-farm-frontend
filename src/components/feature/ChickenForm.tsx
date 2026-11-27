@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ChickenDetailItem } from "@/types";
-import { Input } from "@/components/Base/ui/Input";
-import { Button } from "@/components/Base/ui/Button";
+import { ChickenDetailItem } from "@/type/farmType";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export interface ChickenFormProps {
   initialData?: Partial<ChickenDetailItem>;

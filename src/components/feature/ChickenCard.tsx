@@ -8,15 +8,20 @@ export interface ChickenCardProps {
   product: ChickenProduct;
   onSelect?: (product: ChickenProduct) => void;
   onWatchVideo?: (product: ChickenProduct) => void;
+  onClick?: (product: ChickenProduct) => void;
 }
 
 export const ChickenCard: React.FC<ChickenCardProps> = ({
   product,
   onSelect,
   onWatchVideo,
+  onClick,
 }) => {
   return (
-    <div className="rounded-xl overflow-hidden bg-[#131a29] border border-gray-800 hover:border-amber-500/50 transition-all duration-300 flex flex-col group text-white shadow-lg">
+    <div
+      onClick={() => onClick?.(product)}
+      className="rounded-xl overflow-hidden bg-[#131a29] border border-gray-800 hover:border-amber-500/50 hover:-translate-y-1 transition-all duration-300 flex flex-col group text-white shadow-lg cursor-pointer"
+    >
       <div className="relative h-52 bg-gray-950 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -89,7 +94,10 @@ export const ChickenCard: React.FC<ChickenCardProps> = ({
             size="sm"
             variant="amber"
             className="flex-1 text-xs"
-            onClick={() => onSelect?.(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelect?.(product);
+            }}
             disabled={product.status !== "available"}
           >
             🛒 สั่งซื้อทันที
@@ -98,7 +106,10 @@ export const ChickenCard: React.FC<ChickenCardProps> = ({
             size="sm"
             variant="dark"
             className="text-xs px-2.5"
-            onClick={() => onWatchVideo?.(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onWatchVideo?.(product);
+            }}
           >
             ▶️ คลิปเป้า
           </Button>

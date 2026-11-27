@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useStorefront } from "@/hook/useStorefront";
+import { useChickenDetail } from "@/hook/useChickenDetail";
 import { TopBar } from "./TopBar";
 import { HeaderNav } from "./HeaderNav";
 import { HeroBanner } from "./HeroBanner";
@@ -13,6 +14,10 @@ import { MedicalCard } from "./MedicalCard";
 import { PedigreeSection } from "./PedigreeSection";
 import { LiveTrackingSection } from "./LiveTrackingSection";
 import { Footer } from "./Footer";
+import { ChickenDetailModal } from "./ChickenDetailModal";
+import { ChickenForm } from "./ChickenForm";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
 
 export const StorefrontView: React.FC = () => {
   const {
@@ -23,6 +28,9 @@ export const StorefrontView: React.FC = () => {
     auctionList,
     addToCart,
   } = useStorefront();
+
+  const chickenDetail = useChickenDetail();
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 font-sans selection:bg-amber-500 selection:text-black">
@@ -84,6 +92,20 @@ export const StorefrontView: React.FC = () => {
               <ChickenCard
                 key={chicken.id}
                 product={chicken}
+                onClick={() => {
+                  chickenDetail.openDetail({
+                    id: chicken.id,
+                    code: chicken.code,
+                    name: chicken.name,
+                    breedType: chicken.bloodline,
+                    weight: chicken.weight,
+                    age: chicken.age,
+                    winCount: 3,
+                    price: chicken.price,
+                    status: chicken.status,
+                    images: [chicken.imageUrl],
+                  });
+                }}
                 onSelect={addToCart}
                 onWatchVideo={(item) => alert(`รับชมวิดีโอคลิปเตะเป้าของ: ${item.name}`)}
               />
@@ -155,6 +177,36 @@ export const StorefrontView: React.FC = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Chicken Detail Modal */}
+      <ChickenDetailModal detailHook={chickenDetail} />
+
+      {/* Chicken Form Modal */}
+      <Modal
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        title="เพิ่ม / แก้ไขข้อมูลไก่ชน (Farm Inventory)"
+      >
+        <ChickenForm
+          onSubmit={(data) => {
+            alert(`บันทึกข้อมูลสำเร็จ: ${data.name || "ไก่ชน"}`);
+            setIsFormOpen(false);
+          }}
+          onCancel={() => setIsFormOpen(false)}
+        />
+      </Modal>
+
+      {/* Floating Action Button for Inventory Form */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <Button
+          variant="amber"
+          className="shadow-2xl font-bold flex items-center gap-2 px-4 py-3 rounded-full text-sm hover:scale-105 transition-transform"
+          onClick={() => setIsFormOpen(true)}
+        >
+          <span>➕</span>
+          <span>เพิ่มข้อมูลไก่ชน</span>
+        </Button>
+      </div>
     </div>
   );
 };
